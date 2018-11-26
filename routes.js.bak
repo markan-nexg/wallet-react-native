@@ -1,0 +1,17 @@
+// import { StackNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import Home from './app/components/Home';
+// import BarcodeScanner from './app/components/BarcodeScanner';
+// import Wallets from './app/components/Wallets';
+// import CreateKeys from './app/components/CreateKeys';
+ 
+const AppNavigator = createStackNavigator({
+  Home: { screen: Home,  navigationOptions: { title: `Home` } },
+  BarcodeScanner: { screen: BarcodeScanner, params: { title: '바코드' },  navigationOptions: { title: `Barcode` } },
+  // Wallets: { screen: Wallets, params: { title: '지갑' },  navigationOptions: { header: null}},
+  // CreateKeys: { screen: CreateKeys, params: { title: 'CreateKeys' },  navigationOptions: { title: 'CreateKeys', header: null}},
+}, {
+  // headerMode: 'none',
+});
+
+export default AppNavigator;
