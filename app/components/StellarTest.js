@@ -14,8 +14,8 @@ export default  class StellarTest extends Component {
   };
 
   state = {
-    publicKey: '',
-    secretKey: '',
+    publicKey: 'GA3AV7UWIFDDCKF3JAH6YBQRU64LPZCJ7NUS4VB2KFN32JW6ALG5ARRR',
+    secretKey: 'SCTM7VPKP33V7TINSQG6C2OSIANZDVUJW2TC7NTDYXZKJHMRSVAZ7H3X',
     sign: '',
     error: '',
   }
@@ -39,12 +39,22 @@ export default  class StellarTest extends Component {
   }
 
   _sign = () => {
+    console.log('sign');
     StellarSdk.Network.useTestNetwork();
     const StellarServer = new StellarSdk.Server('https://horizon-testnet.stellar.org');
     const sourceKeys = StellarSdk.Keypair.fromSecret(this.state.secretKey);
+    console.log('sourceKeys:', sourceKeys);
+    console.log('publicKey:', sourceKeys.publicKey());
     StellarServer
       .loadAccount(sourceKeys.publicKey())
+      .catch(error => {
+        console.log('error', error);
+        this.setState({
+          error
+        })
+      })
       .then(sourceAccount => {     
+        console.log('sourceAccount:', sourceAccount);
         let transaction = new StellarSdk.TransactionBuilder(sourceAccount)       
           .addOperation(StellarSdk.Operation.payment({
             destination: this.state.publicKey,
@@ -59,7 +69,8 @@ export default  class StellarTest extends Component {
         this.setState({
           sign
         })
-      }).catch(err => {
+      }).catch(error => {
+        console.log('error', error);
         this.setState({
           error
         })
@@ -90,7 +101,7 @@ export default  class StellarTest extends Component {
           <Text>publicKey: {this.state.publicKey}</Text>
           <Text>secretKey: {this.state.secretKey}</Text>
           <Text>sign: {this.state.sign}</Text>
-          <Text>error: {this.state.error}</Text>
+          {/*<Text>error: {this.state.error}</Text>*/}
         </View>
       </Container>
     );

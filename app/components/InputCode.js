@@ -3,10 +3,7 @@ import { PropTypes } from 'prop-types';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Container from '../containers/Container';
 
-export default  class Home extends Component {
-  // static navigationOptions = {
-  //   title: 'Home',
-  // };
+export default  class InputCode extends Component {
 
   static propTypes = {
     navigation: PropTypes.shape({
@@ -20,27 +17,12 @@ export default  class Home extends Component {
 
     return (
       <Container>
-        <View style={{padding:20}}>
+        <View style={styles.contents}>
           <Text>테스트</Text>
           <View style={styles.spacer}/>
           <Button
-            title="QR코드"
-            onPress={() => navigate('BarcodeScanner')}
-          />
-          <View style={styles.spacer}/>
-          <Button
-            title="코드 입력"
-            onPress={() => navigate('InputCode')}
-          />
-          <View style={styles.spacer}/>
-          <Button
-            title="지갑목록"
+            title="확인"
             onPress={() => navigate('Wallets')}
-          />
-          <View style={styles.spacer}/>
-          <Button
-            title="Stellar Test"
-            onPress={() => navigate('StellarTest')}
           />
         </View>
       </Container>
@@ -51,5 +33,8 @@ export default  class Home extends Component {
 const styles = StyleSheet.create({
   spacer: {
     height: 20
+  },
+  contents: {
+    padding: 20
   }
 });
