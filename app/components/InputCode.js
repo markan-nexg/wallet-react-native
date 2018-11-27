@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import Container from '../containers/Container';
 
 export default  class InputCode extends Component {
@@ -18,8 +18,11 @@ export default  class InputCode extends Component {
     return (
       <Container>
         <View style={styles.contents}>
-          <Text>테스트</Text>
+          <Text>인증 코드 입력</Text>
           <View style={styles.spacer}/>
+          <TextInput 
+            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            placeholder='인증번호를 입력하세요.' />
           <Button
             title="확인"
             onPress={() => navigate('Wallets')}

@@ -22,25 +22,30 @@ export default  class Home extends Component {
       <Container>
         <View style={{padding:20}}>
           <Text>테스트</Text>
-          <View style={styles.spacer}/>
           <Button
+            style={styles.mt20}
             title="QR코드"
             onPress={() => navigate('BarcodeScanner')}
           />
-          <View style={styles.spacer}/>
           <Button
+            style={styles.mt20}
             title="코드 입력"
             onPress={() => navigate('InputCode')}
           />
-          <View style={styles.spacer}/>
           <Button
+            style={styles.mt20}
             title="지갑목록"
             onPress={() => navigate('Wallets')}
           />
-          <View style={styles.spacer}/>
           <Button
+            style={styles.mt20}
             title="Stellar Test"
             onPress={() => navigate('StellarTest')}
+          />
+          <Button
+            style={styles.mt20}
+            title="Bitcoin Test"
+            onPress={() => navigate('BitcoinTest')}
           />
         </View>
       </Container>
@@ -51,5 +56,8 @@ export default  class Home extends Component {
 const styles = StyleSheet.create({
   spacer: {
     height: 20
+  },
+  mt20: {
+    marginTop: 20
   }
 });
