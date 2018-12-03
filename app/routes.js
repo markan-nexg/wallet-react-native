@@ -6,6 +6,8 @@ import InputCode from './components/InputCode';
 import StellarTest from './components/StellarTest';
 import BitcoinTest from './components/BitcoinTest';
 import EthereumTest from './components/EthereumTest';
+import InputSMSCode from './components/InputSMSCode';
+import SuccessDeviceAuth from './components/SuccessDeviceAuth';
  
 const AppNavigator = createStackNavigator({
   Home: { screen: Home, params: { title: 'Test' },  navigationOptions: {title: `Test`} },
@@ -15,6 +17,9 @@ const AppNavigator = createStackNavigator({
   StellarTest: { screen: StellarTest ,  navigationOptions: { title: 'StellarTest' } },
   BitcoinTest: { screen: BitcoinTest ,  navigationOptions: { title: 'BitcoinTest' } },
   EthereumTest: { screen: EthereumTest ,  navigationOptions: { title: 'EthereumTest' } },
+
+  InputSMSCode: { screen: InputSMSCode ,  navigationOptions: { title: 'InputSMSCode' } },
+  SuccessDeviceAuth: { screen: SuccessDeviceAuth ,  navigationOptions: { title: 'SuccessDeviceAuth' } },
 }, {
 }, {
   // headerMode: 'none',
