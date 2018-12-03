@@ -47,6 +47,11 @@ export default  class Home extends Component {
             title="Bitcoin Test"
             onPress={() => navigate('BitcoinTest')}
           />
+          <Button
+            style={styles.mt20}
+            title="Ethereum Test"
+            onPress={() => navigate('EthereumTest')}
+          />
         </View>
       </Container>
     );

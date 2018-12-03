@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Container from '../containers/Container';
-import StellarSdk from '@pigzbe/react-native-stellar-sdk';
+import { API_URL, user } from '../test'
+import "../shim";
+import bitcoin from "rn-bitcoinjs-lib"; // https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/bip32.js#L55
+import bip39 from 'bip39';
+import bip32 from 'bip32';
 
 export default class EthereumTest extends Component {
 
@@ -14,67 +18,74 @@ export default class EthereumTest extends Component {
   };
 
   state = {
-    publicKey: 'GA3AV7UWIFDDCKF3JAH6YBQRU64LPZCJ7NUS4VB2KFN32JW6ALG5ARRR',
-    secretKey: 'SCTM7VPKP33V7TINSQG6C2OSIANZDVUJW2TC7NTDYXZKJHMRSVAZ7H3X',
+    publicKey: '',
+    secretKey: '',
     sign: '',
     error: '',
+    mnemonic: '',
+    address: '',
+    walletId: '',
   }
 
-  _createKeys = async () => {
-    // 스텔라 키쌍 생성
-    try {
-      const keypair = await StellarSdk.Keypair.randomAsync();
-      const publicKey = keypair.publicKey();
-      const secretKey = keypair.secret();
-      console.log(publicKey, secretKey);
+  // 지갑 생성
+  _createWalletRequest = () => {
+    const headers = {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'x-access-token': `${user.token}`,
+    }
+    const data = {
+      label: '지갑이름',
+      xPubKey: this.state.publicKey,
+      network: 'testnet',
+      sign: 'S',
+    };
+    fetch(API_URL + '/v1/eth/wallet/create', {
+      headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
       this.setState({
-        publicKey,
-        secretKey
+        walletId: res.walletId,
+        address: res.address,
+      })
+    })
+    .catch(err => console.log(err));
+  }
+
+  _createKeys = () => {
+    console.log('createKeys')
+    // 키쌍 생성
+    try {
+      // 1. 니모닉
+      const mnemonic = 'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about';
+
+      // 2. 시드 생성
+      const seed = bip39.mnemonicToSeed(mnemonic);
+
+      // 3. 마스터 키 생성
+      const root = bip32.fromSeed(seed); 
+
+      // 4. 비트코인 키쌍 생성
+      const path = "m/44'/60'/0'"
+      const keyPair = root.derivePath(path);
+
+      let xPubKey = keyPair.neutered().toBase58();
+      console.log('xPubKey,:', xPubKey);
+
+      this.setState({
+        publicKey: xPubKey,
+        secretKey: keyPair.privateKey,
       });
     } catch (error) {
-      this.setState({
-        error
-      })
+      console.log('error:', error);
     }
   }
 
   _sign = () => {
     console.log('sign');
-    StellarSdk.Network.useTestNetwork();
-    const StellarServer = new StellarSdk.Server('https://horizon-testnet.stellar.org');
-    const sourceKeys = StellarSdk.Keypair.fromSecret(this.state.secretKey);
-    console.log('sourceKeys:', sourceKeys);
-    console.log('publicKey:', sourceKeys.publicKey());
-    StellarServer
-      .loadAccount(sourceKeys.publicKey())
-      .catch(error => {
-        console.log('error', error);
-        this.setState({
-          error
-        })
-      })
-      .then(sourceAccount => {     
-        console.log('sourceAccount:', sourceAccount);
-        let transaction = new StellarSdk.TransactionBuilder(sourceAccount)       
-          .addOperation(StellarSdk.Operation.payment({
-            destination: this.state.publicKey,
-            asset: StellarSdk.Asset.native(),         
-            amount: String(0.1)   
-          }))
-          .addMemo(StellarSdk.Memo.text('test'))       
-          .build();
-        transaction.sign(sourceKeys);
-        // .toEnvelope().toXDR('base64');
-        const sign = transaction.toEnvelope().toXDR('base64');
-        this.setState({
-          sign
-        })
-      }).catch(error => {
-        console.log('error', error);
-        this.setState({
-          error
-        })
-      });
   }
 
   render() {
@@ -83,16 +94,13 @@ export default class EthereumTest extends Component {
     return (
       <Container>
         <View style={{padding:20}}>
-          <Text>스텔라 테스트</Text>
-          <View style={styles.spacer}/>
-          <Button
+          <Button style={styles.mt20}
             title="키 생성"
             onPress={this._createKeys}
           />
-          <View style={styles.spacer}/>
-          <Button
-            title="서명"
-            onPress={this._sign}
+          <Button style={styles.mt20}
+            title="지갑 생성 요청"
+            onPress={this._createWalletRequest}
           />
         </View>
 
@@ -101,6 +109,8 @@ export default class EthereumTest extends Component {
           <Text>publicKey: {this.state.publicKey}</Text>
           <Text>secretKey: {this.state.secretKey}</Text>
           <Text>sign: {this.state.sign}</Text>
+          <Text>walletId: {this.state.walletId}</Text>
+          <Text>address: {this.state.address}</Text>
           {/*<Text>error: {this.state.error}</Text>*/}
         </View>
       </Container>
@@ -115,5 +125,8 @@ const styles = StyleSheet.create({
   result: {
     marginHorizontal: 10,
     marginVertical: 10
+  },
+  mt20: {
+    marginTop: 20
   }
 });
