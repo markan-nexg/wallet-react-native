@@ -4,18 +4,9 @@ import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import { PropTypes } from 'prop-types';
 import QRCodeScannerView from './QRCodeScannerView';
 import InputCodeView from './InputCodeView';
+import { API_URL } from '../../test'
 
-const FirstRoute = () => (
-  <View style={styles.container}>
-    <QRCodeScannerView />
-  </View>
-);
-const SecondRoute = () => (
-  <View style={styles.container}>
-    <InputCodeView />
-  </View>
-);
-
+// https://github.com/react-native-community/react-native-tab-view/tree/v0.0.67
 class InputAuthCode extends React.Component {
 
   state = {
@@ -26,10 +17,56 @@ class InputAuthCode extends React.Component {
     ],
   };
 
-  _renderScene = SceneMap({
-    '1': FirstRoute,
-    '2': SecondRoute,
-  });
+  // QR코드 촬영 -> 코드로 릴레이 서버에서 암호화된 데이터 조회
+  _getUserInfo(code) {
+    /*
+    console.log('_getUserInfo: ', API_URL + '/test/qrcode?code=' + code);
+    return fetch(API_URL + '/test/qrcode?code=' + code)
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      // alert(JSON.stringify(ree));
+      return res;
+    })
+    // .catch(err => console.log(err));
+    */
+
+  //  this._getUserInfo('123456')
+  //  .then(res => {
+  //    alert(JSON.stringify(res))
+  //    this.props.navigation.navigate('InputSMSCode', res);
+  //  })
+  //  .catch(err => console.log(err));
+  }
+
+  _requestAuthInfo = (code) => {
+    console.log('_next', code);
+    // alert(code);
+    // console.log('_getUserInfo: ', API_URL + '/test/qrcode?code=' + code);
+    fetch(API_URL + '/test/qrcode?code=' + code)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        // alert(JSON.stringify(res));
+        // return res;
+        this.props.navigation.navigate('InputSMSCode', res);
+      })
+      .catch(err => {
+        console.log('[ERROR]', err);
+        alert(err)
+      });
+  }
+
+  _renderScene = ({ route }) => {
+    switch (route.key) {
+    case '1':
+      return <QRCodeScannerView next={this._requestAuthInfo} />;
+    case '2':
+      return <InputCodeView { ...this.props } next={this._requestAuthInfo} />;
+    default:
+      return null;
+    }
+  }
   
   render() {
     const { width, height } = Dimensions.get('window');

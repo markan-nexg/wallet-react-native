@@ -38,11 +38,11 @@ export default class InputSMSCode extends Component {
           <Text>인증 코드 입력</Text>
           <View style={styles.spacer}/>
           <Text>이제 문자 메세지로 받으신 인증번호를 입력해 주시면 사용자 인증이 완료됩니다.</Text>
-          <View style={styles.spacer}/>
+          
           <TextInput 
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            style={styles.inputBox}
             placeholder='인증번호를 입력하세요.' />
-          <View style={styles.spacer}/>
+          
           <Button
             title="확인"
             onPress={() => this._next()}
@@ -59,5 +59,12 @@ const styles = StyleSheet.create({
   },
   contents: {
     padding: 20
+  },
+  inputBox: {
+    height: 40, 
+    borderColor: '#BBB', 
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginVertical: 20,
   }
 });

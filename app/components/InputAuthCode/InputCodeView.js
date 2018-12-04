@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import Container from '../../containers/Container';
 
-export default class InputCodeView extends Component {
+class InputCodeView extends Component {
+
+  state = {
+    code: ''
+  }
+
+  _next = () => {
+    console.log('InputCodeView._next')
+    const { code } = this.state;
+    if(!code) return alert('인증코드를 입력하세요.');
+
+    this.props.next(code);
+    this.setState({ code: '' });
+  }
 
   render() {
     return (
@@ -12,11 +26,13 @@ export default class InputCodeView extends Component {
 
           <TextInput 
             style={ styles.inputBox }
+            value={ this.state.code }
+            onChangeText={code => this.setState({code})}
             placeholder='인증번호를 입력하세요.' />
           
           <Button
             title="입력"
-            onPress={() => alert('ok')}
+            onPress={this._next}
           />
         </View>
       </Container>
@@ -36,3 +52,9 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   }
 });
+
+InputCodeView.propTypes = {
+  next: PropTypes.func.isRequired,
+};
+
+export default InputCodeView;
