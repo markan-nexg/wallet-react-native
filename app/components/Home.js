@@ -24,6 +24,11 @@ export default  class Home extends Component {
           <Text>테스트</Text>
           <View style={styles.spacer}/>
           <Button
+            title="기기인증"
+            onPress={() => navigate('InputAuthCode')}
+          />
+          <View style={styles.spacer}/>
+          <Button
             title="QR코드"
             onPress={() => navigate('BarcodeScanner')}
           />
