@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
 import Container from '../containers/Container';
+import SecureStorage, { ACCESS_CONTROL, ACCESSIBLE, AUTHENTICATION_TYPE } from 'react-native-secure-storage';
 
 export default class InputSMSCode extends Component {
 
@@ -12,7 +13,7 @@ export default class InputSMSCode extends Component {
     }).isRequired,
   };
 
-  _next() {
+  async _next(data) {
     // 입력받은 인증번호로 복호화
 
     // 복호화 끝.
@@ -21,8 +22,30 @@ export default class InputSMSCode extends Component {
     //   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjoiYzQ3NjczYjAtMGZlNy00NDM5LWEzZGUtOTZjNjBmYTZhYWQ2IiwiaWF0IjoxNTQzODI4NzIwLCJleHAiOjE1NDM4Mjg3NDB9.TZL1_IHrNvjWZPoAaGVqCP0rgsH7lcESu7mfza6jKNc"
     //   usrId: "c47673b0-0fe7-4439-a3de-96c60fa6aad6"
     // }
+    console.log('SecureStorage', SecureStorage);
+
+    const config = {
+      accessControl: ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE,
+      accessible: ACCESSIBLE.WHEN_UNLOCKED,
+      authenticationPrompt: 'auth with yourself',
+      service: 'example',
+      authenticateType: AUTHENTICATION_TYPE.BIOMETRICS,
+    }
+
+    Alert.alert(JSON.stringify(data));
 
     // 데이터 저장.
+    try {
+      const userData = JSON.stringify(data);
+      console.log('SecureStorage.setItem', SecureStorage.setItem);
+      const key = 'user';
+      await SecureStorage.setItem(key, userData, config);
+      const got = await SecureStorage.getItem(key, config);
+      console.log(got);
+    } catch(err) {
+      console.log(err);
+    }
+
     this.props.navigation.navigate('SuccessDeviceAuth')
   }
 
@@ -45,7 +68,7 @@ export default class InputSMSCode extends Component {
           
           <Button
             title="확인"
-            onPress={() => this._next()}
+            onPress={() => this._next(state.params)}
           />
         </View>
       </Container>
