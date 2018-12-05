@@ -3,6 +3,7 @@ package com.sampleapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.taluttasgiran.rnsecurestorage.RNSecureStoragePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSecureStoragePackage(),
             new RNGestureHandlerPackage(),
             new RNCameraPackage(),
             new RandomBytesPackage(),

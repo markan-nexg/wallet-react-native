@@ -9,6 +9,7 @@ import BitcoinTest from './components/BitcoinTest';
 import EthereumTest from './components/EthereumTest';
 import InputSMSCode from './components/InputSMSCode';
 import SuccessDeviceAuth from './components/SuccessDeviceAuth';
+import CreateWallets from './components/CreateWallets';
  
 const AppNavigator = createStackNavigator({
   Home: { screen: Home, params: { title: 'Test' },  navigationOptions: {title: `Test`} },
@@ -23,6 +24,7 @@ const AppNavigator = createStackNavigator({
 
   InputSMSCode: { screen: InputSMSCode ,  navigationOptions: { title: 'InputSMSCode' } },
   SuccessDeviceAuth: { screen: SuccessDeviceAuth ,  navigationOptions: { title: 'SuccessDeviceAuth' } },
+  CreateWallets: { screen: CreateWallets ,  navigationOptions: { title: '지갑 만들기' } },
 }, {
 }, {
   // headerMode: 'none',

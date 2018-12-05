@@ -29,6 +29,11 @@ export default  class Home extends Component {
           />
           <View style={styles.spacer}/>
           <Button
+            title="지갑생성"
+            onPress={() => navigate('CreateWallets')}
+          />
+          {/*
+          <Button
             title="QR코드"
             onPress={() => navigate('BarcodeScanner')}
           />
@@ -37,6 +42,7 @@ export default  class Home extends Component {
             title="코드 입력"
             onPress={() => navigate('InputCode')}
           />
+          */}
           <View style={styles.spacer}/>
           <Button
             title="지갑목록"

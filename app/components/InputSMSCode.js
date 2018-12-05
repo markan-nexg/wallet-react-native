@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
 import Container from '../containers/Container';
-import SecureStorage, { ACCESS_CONTROL, ACCESSIBLE, AUTHENTICATION_TYPE } from 'react-native-secure-storage';
+// import SecureStorage, { ACCESS_CONTROL, ACCESSIBLE, AUTHENTICATION_TYPE } from 'react-native-secure-storage';
+
+// https://github.com/talut/rn-secure-storage
+import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
 
 export default class InputSMSCode extends Component {
 
@@ -22,31 +25,44 @@ export default class InputSMSCode extends Component {
     //   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjoiYzQ3NjczYjAtMGZlNy00NDM5LWEzZGUtOTZjNjBmYTZhYWQ2IiwiaWF0IjoxNTQzODI4NzIwLCJleHAiOjE1NDM4Mjg3NDB9.TZL1_IHrNvjWZPoAaGVqCP0rgsH7lcESu7mfza6jKNc"
     //   usrId: "c47673b0-0fe7-4439-a3de-96c60fa6aad6"
     // }
-    console.log('SecureStorage', SecureStorage);
+    // console.log('SecureStorage', SecureStorage);
 
-    const config = {
-      accessControl: ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE,
-      accessible: ACCESSIBLE.WHEN_UNLOCKED,
-      authenticationPrompt: 'auth with yourself',
-      service: 'example',
-      authenticateType: AUTHENTICATION_TYPE.BIOMETRICS,
-    }
+    // const config = {
+    //   accessControl: ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE,
+    //   accessible: ACCESSIBLE.WHEN_UNLOCKED,
+    //   authenticationPrompt: 'auth with yourself',
+    //   service: 'example',
+    //   authenticateType: AUTHENTICATION_TYPE.BIOMETRICS,
+    // }
 
     Alert.alert(JSON.stringify(data));
 
     // 데이터 저장.
     try {
       const userData = JSON.stringify(data);
-      console.log('SecureStorage.setItem', SecureStorage.setItem);
-      const key = 'user';
-      await SecureStorage.setItem(key, userData, config);
-      const got = await SecureStorage.getItem(key, config);
+      // console.log('SecureStorage.setItem', SecureStorage.setItem);
+      // const key = 'user';
+      // await SecureStorage.setItem(key, userData, config);
+      // const got = await SecureStorage.getItem(key, config);
+      await RNSecureStorage.set("user", userData, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
+      // .then((res) => {
+      // console.log(res);
+      // }, (err) => {
+      // console.log(err);
+      // });
+
+      const got = await RNSecureStorage.get("user")
+      // .then((value) => {
+      //   console.log(value) // Will return direct value
+      // }).catch((err) => {
+      //   console.log(err)
+      // })
       console.log(got);
     } catch(err) {
       console.log(err);
     }
 
-    this.props.navigation.navigate('SuccessDeviceAuth')
+    this.props.navigation.navigate('CreateWallets');  // 지갑 생성 화면으로 이동
   }
 
   render() {
