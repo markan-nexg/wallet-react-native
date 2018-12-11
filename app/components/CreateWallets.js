@@ -12,6 +12,11 @@ class CreateWallets extends Component {
     }).isRequired,
   };
 
+  // 지갑서버에 지갑 생성 요청
+  _requestCreateWallets = () => {
+
+  }
+
   render() {
     const { navigate, state } = this.props.navigation;
 

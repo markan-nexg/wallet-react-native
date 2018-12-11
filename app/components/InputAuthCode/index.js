@@ -1,13 +1,30 @@
 import * as React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, Alert } from 'react-native';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import { PropTypes } from 'prop-types';
 import QRCodeScannerView from './QRCodeScannerView';
 import InputCodeView from './InputCodeView';
+import gql from "graphql-tag";
+import { graphql } from 'react-apollo';
 import { API_URL } from '../../test'
+
+const GET_CONTENTS = gql`
+  mutation getContents($transId: String!) {
+    getContents(message: { transId: $transId, , userId: "0000" }) {
+      transId
+      status
+      msgType
+      msgContents
+    }
+  }
+`;
 
 // https://github.com/react-native-community/react-native-tab-view/tree/v0.0.67
 class InputAuthCode extends React.Component {
+
+  static navigationOptions = {
+    title: '기기인증코드 입력',
+  };
 
   state = {
     index: 0,
@@ -19,6 +36,7 @@ class InputAuthCode extends React.Component {
 
   // QR코드 촬영 -> 코드로 릴레이 서버에서 암호화된 데이터 조회
   _getUserInfo(code) {
+    console.log(this.props);
     /*
     console.log('_getUserInfo: ', API_URL + '/test/qrcode?code=' + code);
     return fetch(API_URL + '/test/qrcode?code=' + code)
@@ -40,10 +58,31 @@ class InputAuthCode extends React.Component {
   }
 
   _requestAuthInfo = (code) => {
+    // console.log(this.props.mutate);
     console.log('_next', code);
+    // this.props.mutate({ variables: { 
+    //   transId: code
+    // }}, ({ loading, data, error }) => {
+    //   console.log(loading, data, error);
+    // });
+    this.props.mutate({ 
+      variables: { transId: code }
+    })
+    .then(({ data }) => {
+      console.log(data.getContents);
+      const { msgContents } = data.getContents;
+      Alert.alert(`이거 맞니?\n\n $msgContents}`);
+      this.props.navigation.navigate('InputSMSCode', res);
+    })
+    .catch((error) => {
+      console.log('there was an error sending the query', error);
+      Alert.alert('정상적인 코드가 아니거나 유효시간이 지났습니다.\n\n다시 시도해 주세요.');
+    });
+
     // alert(code);
     // console.log('_getUserInfo: ', API_URL + '/test/qrcode?code=' + code);
-    fetch(API_URL + '/test/qrcode?code=' + code)
+    // TDOO: progress bar 표시하기
+    /*fetch(API_URL + '/test/qrcode?code=' + code)
       .then(res => res.json())
       .then(res => {
         console.log(res);
@@ -54,7 +93,7 @@ class InputAuthCode extends React.Component {
       .catch(err => {
         console.log('[ERROR]', err);
         alert(err)
-      });
+      });*/
   }
 
   _renderScene = ({ route }) => {
@@ -96,4 +135,6 @@ InputAuthCode.propTypes = {
   }).isRequired,
 };
 
-export default InputAuthCode;
+export default graphql(GET_CONTENTS, {
+
+})(InputAuthCode);
