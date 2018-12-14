@@ -42,7 +42,7 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		D4DF12A4F2B24FF283CC9B19 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B42617477564F4E9B27B475 /* libRNGestureHandler.a */; };
 		D6313EEBF69749CF90CC0F70 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 874D954C4F5840E880591B8B /* libReactNativePermissions.a */; };
-		83EDA56950A9477C87C9CD9F /* libRNSecureStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AAA66D0B42F4DF091939F16 /* libRNSecureStorage.a */; };
+		36ADA2F15C06405991EF4967 /* libRNSecureStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C5F3B5E2D6048F282922A4E /* libRNSecureStorage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -392,8 +392,8 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		BD9F751DCBE048B4B491CAC1 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
 		BF769B0E4CD54B33AECAD984 /* libRNRandomBytes-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNRandomBytes-tvOS.a"; sourceTree = "<group>"; };
-		BEC0042C20894E5B8DC25E75 /* RNSecureStorage.xcodeproj */ = {isa = PBXFileReference; name = "RNSecureStorage.xcodeproj"; path = "../node_modules/rn-secure-storage/ios/RNSecureStorage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		0AAA66D0B42F4DF091939F16 /* libRNSecureStorage.a */ = {isa = PBXFileReference; name = "libRNSecureStorage.a"; path = "libRNSecureStorage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		806B58E1F92446B48352F856 /* RNSecureStorage.xcodeproj */ = {isa = PBXFileReference; name = "RNSecureStorage.xcodeproj"; path = "../node_modules/rn-secure-storage/ios/RNSecureStorage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6C5F3B5E2D6048F282922A4E /* libRNSecureStorage.a */ = {isa = PBXFileReference; name = "libRNSecureStorage.a"; path = "libRNSecureStorage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,7 +425,7 @@
 				D6313EEBF69749CF90CC0F70 /* libReactNativePermissions.a in Frameworks */,
 				019B0538C8FA4A38A7F00486 /* libRNCamera.a in Frameworks */,
 				D4DF12A4F2B24FF283CC9B19 /* libRNGestureHandler.a in Frameworks */,
-				83EDA56950A9477C87C9CD9F /* libRNSecureStorage.a in Frameworks */,
+				36ADA2F15C06405991EF4967 /* libRNSecureStorage.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,7 +662,7 @@
 				2E1D4DEB0B204B0CB9BBFFD5 /* ReactNativePermissions.xcodeproj */,
 				BD9F751DCBE048B4B491CAC1 /* RNCamera.xcodeproj */,
 				355F4EA16EDE463BB47E4982 /* RNGestureHandler.xcodeproj */,
-				BEC0042C20894E5B8DC25E75 /* RNSecureStorage.xcodeproj */,
+				806B58E1F92446B48352F856 /* RNSecureStorage.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1344,7 +1344,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-permissionsios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
-					"$(SRCROOT)/../node_modules/react-native-secure-storage/ios/**",
 					"$(SRCROOT)/../node_modules/rn-secure-storage/ios",
 				);
 				INFOPLIST_FILE = SampleAppTests/Info.plist;
@@ -1375,7 +1374,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-permissionsios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
-					"$(SRCROOT)/../node_modules/react-native-secure-storage/ios/**",
 					"$(SRCROOT)/../node_modules/rn-secure-storage/ios",
 				);
 				INFOPLIST_FILE = SampleAppTests/Info.plist;
@@ -1407,7 +1405,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-permissionsios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
-					"$(SRCROOT)/../node_modules/react-native-secure-storage/ios/**",
 					"$(SRCROOT)/../node_modules/rn-secure-storage/ios",
 				);
 				INFOPLIST_FILE = SampleApp/Info.plist;
@@ -1434,7 +1431,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-permissionsios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
-					"$(SRCROOT)/../node_modules/react-native-secure-storage/ios/**",
 					"$(SRCROOT)/../node_modules/rn-secure-storage/ios",
 				);
 				INFOPLIST_FILE = SampleApp/Info.plist;
@@ -1468,7 +1464,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-permissionsios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
-					"$(SRCROOT)/../node_modules/react-native-secure-storage/ios/**",
 					"$(SRCROOT)/../node_modules/rn-secure-storage/ios",
 				);
 				INFOPLIST_FILE = "SampleApp-tvOS/Info.plist";
@@ -1507,7 +1502,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-permissionsios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
-					"$(SRCROOT)/../node_modules/react-native-secure-storage/ios/**",
 					"$(SRCROOT)/../node_modules/rn-secure-storage/ios",
 				);
 				INFOPLIST_FILE = "SampleApp-tvOS/Info.plist";
@@ -1545,7 +1539,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-permissionsios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
-					"$(SRCROOT)/../node_modules/react-native-secure-storage/ios/**",
 					"$(SRCROOT)/../node_modules/rn-secure-storage/ios",
 				);
 				INFOPLIST_FILE = "SampleApp-tvOSTests/Info.plist";
@@ -1583,7 +1576,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-permissionsios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
-					"$(SRCROOT)/../node_modules/react-native-secure-storage/ios/**",
 					"$(SRCROOT)/../node_modules/rn-secure-storage/ios",
 				);
 				INFOPLIST_FILE = "SampleApp-tvOSTests/Info.plist";
